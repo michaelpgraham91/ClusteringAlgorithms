@@ -181,11 +181,13 @@ void run(vector<Point> &S, int k, vector<Point> &c) {
     }
 }
 
+//Finds euclidean distance between two Points, returns a double
 double sim(Point a, Point b) {
     double distance;
     distance = abs(a.x-b.x) + abs(a.y-b.y);
     return distance;
 }
+
 
 int argmin(int k, int i, vector<Point> S, vector<Point> c) {
     vector<double> distances;
@@ -222,7 +224,8 @@ void init(vector<Point> &S, int k, vector<Point> c) {
             j = rand() % S.size();
         }
         jVals.insert(j);
-        c[k].x = SS[j].x; c[k].y = SS[j].y;
+        c[k].x = SS[j].x;
+        c[k].y = SS[j].y;
         cout << "j: " << j << "\n";
         cout << "c[k]" << c[k].x << ", " << c[k].y << "\n";
         SS.erase(SS.begin()+j);
@@ -234,6 +237,7 @@ void init(vector<Point> &S, int k, vector<Point> c) {
     }
 }
 
+//Creates and returns a copy of a vector of Points
 vector<Point> copyVector(vector<Point> v) {
     vector<Point> newVect;
     for(int i=0; i<v.size(); i++) {
@@ -242,6 +246,7 @@ vector<Point> copyVector(vector<Point> v) {
     return newVect;
 }
 
+//Utility function to print a 1D vector of Points
 void showVector(vector<Point> v) {
     for(int i=0; i<v.size(); i++) {
 //        cout << "x: " << v[i].x;
@@ -251,6 +256,7 @@ void showVector(vector<Point> v) {
     }
 }
 
+//Prints each cluster and its contents
 void showClusters(vector<Point> S) {
     for(int j=0; j<3; j++) {
         cout << "Cluster " << j << ": ";
@@ -263,6 +269,7 @@ void showClusters(vector<Point> S) {
     }
 }
 
+//Assigns values and names to clusters
 void populate(vector<Point> &S) {
     S.push_back(Point());
     S[0].x = 2; S[0].y = 10; S[0].name = "A1";

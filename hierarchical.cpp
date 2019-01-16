@@ -1,13 +1,10 @@
 /*
 Single Linkage Hierarchical Agglomeration Algorithm
 
-
-
+Points are clustered based on shortest euclidean distance.
+Program will output an array of all distances between points
+followed by each cluster and its contents.
 */
-
-
-
-
 
 #include <iostream>
 #include <vector>
@@ -53,14 +50,19 @@ int main() {
     return 0;
 }
 
+//This returns the point on array C that has the smallest nonzero value
+//where C is the array of distances between the points
 Point closestPair(vector<vector<double>> C, vector<int> I) {
-    double minimum = 100;
+    double minimum = 100; //Could be any number larger than the greatest distance
     double tempMin;
     Point p;
     int x, y;
     for(int i=0; i<C.size()-1; i++) {
         for(int j=0; j<C[i].size(); j++) {
             tempMin = C[i][j];
+            //The following statement resolves an issue where the distance between two pairs of
+            //points is an extremely small number instead of zero, likely due to a
+            //rounding error during floating point arithmetic
             if((tempMin - minimum < 0 && tempMin - minimum > -0.00001) ||
                (tempMin - minimum > 0 && tempMin - minimum < 0.00001)) break;
             if(tempMin < minimum && tempMin > 0 && I[i] != 0) {
@@ -73,6 +75,7 @@ Point closestPair(vector<vector<double>> C, vector<int> I) {
     return p;
 }
 
+//Merges row in array C after that value has been added to a cluster
 double sldRow(int i, int m, int j, vector<vector<double>> C) {
     double minimum = 100;
     double tempMin;
@@ -88,6 +91,7 @@ double sldRow(int i, int m, int j, vector<vector<double>> C) {
     return minimum;
 }
 
+//Merges column in array C after that value has been added to a cluster
 double sldCol(int i, int m, int j, vector<vector<double>> C) {
     double minimum = 100;
     double tempMin;
@@ -108,7 +112,9 @@ double sldCol(int i, int m, int j, vector<vector<double>> C) {
 Function to perform single linkage clustering
 C is a 2d array of all of the distances between each point
 Array C will be printed at runtime
-I is an array that keeps track of
+I is an array that keeps track of which clusters have been made
+(i.e. there can't be two cluster 1's)
+S is the vector of points to be clustered
 */
 void simplehac(vector<Point> &S, int k) {
     int N = S.size();
